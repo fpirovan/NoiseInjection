@@ -14,6 +14,15 @@ import scipy.stats
 import time as timer
 import dart.experiments.framework as framework
 
+def reproducibility_setup(seed=0):
+    import random
+    random.seed(seed)
+
+    import numpy as np
+    np.random.seed(seed)
+
+reproducibility_setup()
+
 def main():
     title = 'test_dagger'
     ap = argparse.ArgumentParser()
