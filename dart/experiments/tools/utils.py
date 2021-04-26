@@ -44,8 +44,10 @@ def trajs2data(trajs):
             y = np.vstack((y, np.array(controls)))
     return X, y
 
+
+PARENT_DIR = "/cluster/scratch/fpirovan/DART"
+# PARENT_DIR = "/Users/fedepiro/Projects/DART"
 import os
-PARENT_DIR = os.path.dirname(os.path.dirname(os.getcwd()))
 
 
 def generate_dir(title, sub_dir, input_params):
