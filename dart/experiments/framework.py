@@ -139,13 +139,12 @@ class Test(object):
             Preprocess hyperparameters and initialize learner and supervisor
         """
 
-        parent_dir = "/Users/fedepiro/Projects/DART"
-        # parent_dir = "/cluster/scratch/fpirovan/DART"
+        parent_dir = os.path.dirname(os.path.dirname(os.getcwd()))
         self.params['filename'] = 'experts/' + self.params['envname'] + f'/{self.params["envname"]}.zip'
         self.params["filename"] = os.path.join(parent_dir, self.params["filename"])
 
-        # expert_dir = pjoin("/cluster/home/fpirovan/topographic-nn/environments", "experts", self.params["envname"])
-        expert_dir = pjoin("/Users/fedepiro/Projects/topographic-nn/environments", "experts", self.params["envname"])
+        expert_dir = pjoin("/cluster/home/fpirovan/topographic-nn/environments", "experts", self.params["envname"])
+        # expert_dir = pjoin("/Users/fedepiro/Projects/topographic-nn/environments", "experts", self.params["envname"])
         stats_dir = pjoin(expert_dir, self.params["envname"])
         hyperparams = load_saved_hyperparams(stats_dir)
         self.env = create_zoo_env(self.params["envname"], stats_dir, hyperparams)
