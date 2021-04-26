@@ -119,10 +119,10 @@ def collect_traj(env, agent, T, visualize=False):
 
         a_intended = agent.intended_action(s)
         a = agent.sample_action(s)
-        next_s, r, done, _ = env.step(a)
+        next_s, r, done, _ = env.step(a[None, :])
         reward += r
 
-        states.append(s)
+        states.append(s.ravel())
         intended_actions.append(a_intended)
         taken_actions.append(a)
 
@@ -157,10 +157,10 @@ def collect_traj_beta(env, sup, lnr, T, beta, visualize=False):
             a = sup.sample_action(s)
             count += 1
         
-        next_s, r, done, _ = env.step(a)
+        next_s, r, done, _ = env.step(a[None, :])
         reward += r
 
-        states.append(s)
+        states.append(s.ravel())
         intended_actions.append(a_intended)
         taken_actions.append(a)
 

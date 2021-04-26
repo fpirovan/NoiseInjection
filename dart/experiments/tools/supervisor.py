@@ -9,13 +9,13 @@ class GaussianSupervisor():
         self.cov = cov
 
     def sample_action(self, s):
-        intended_action = self.policy.intended_action(s)
+        intended_action = self.policy.intended_action(s).ravel()
         sampled_action = np.random.multivariate_normal(intended_action, self.cov)
         return sampled_action
 
 
     def intended_action(self, s):
-        return self.policy.intended_action(s)
+        return self.policy.intended_action(s).ravel()
 
 class Supervisor():
 
@@ -26,12 +26,11 @@ class Supervisor():
             tf_util.initialize()
 
     def sample_action(self, s):
-        with self.sess.as_default():
-            intended_action = self.policy_fn(s[None,:])[0]
-            return intended_action
+        intended_action, _ = self.policy_fn(s, None)
+        return intended_action.ravel()
 
     def intended_action(self, s):
-        return self.sample_action(s)
+        return self.sample_action(s).ravel()
 
 
 class EpsSupervisor():

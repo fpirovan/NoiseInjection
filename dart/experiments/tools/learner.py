@@ -48,10 +48,16 @@ class Learner():
     def intended_action(self, s):
         if self.one_class_error is not None:
             return self.one_class_error
-        return self.est.predict([s])[0]
+
+        if len(s.shape) == 2:
+            return self.est.predict(s)[0]
+        elif len(s.shape) == 1:
+            return self.est.predict([s])[0]
+        else:
+            raise RuntimeError("Shapes predict")
 
     def sample_action(self, s):
-        return self.intended_action(s)
+        return self.intended_action(s).ravel()
 
 
 

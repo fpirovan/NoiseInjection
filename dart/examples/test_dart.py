@@ -17,10 +17,10 @@ import dart.experiments.framework as framework
 def main():
     title = 'test_dart'
     ap = argparse.ArgumentParser()
-    ap.add_argument('--envname', required=True)                         # OpenAI gym environment
-    ap.add_argument('--t', required=True, type=int)                     # time horizon
-    ap.add_argument('--iters', required=True, type=int, nargs='+')      # iterations to evaluate the learner on
-    ap.add_argument('--update', required=True, nargs='+', type=int)     # iterations to update the noise term
+    ap.add_argument('--envname', default="HalfCheetahBulletEnv-v0")                         # OpenAI gym environment
+    ap.add_argument('--t', default=100, type=int)                     # time horizon
+    ap.add_argument('--iters', default=[3], type=int, nargs='+')      # iterations to evaluate the learner on
+    ap.add_argument('--update', default=[10], nargs='+', type=int)     # iterations to update the noise term
     
     args = vars(ap.parse_args())
     args['arch'] = [64, 64]
@@ -69,7 +69,8 @@ class Test(framework.Test):
             'sup_rewards': [],
             'surr_losses': [],
             'sup_losses': [],
-            'sim_errs': []
+            'sim_errs': [],
+            'reward_stds': []
         }
         trajs = []
 
@@ -100,7 +101,7 @@ class Test(framework.Test):
             results['surr_losses'].append(it_results['surr_loss_mean'])
             results['sup_losses'].append(it_results['sup_loss_mean'])
             results['sim_errs'].append(it_results['sim_err_mean'])
-
+            results['reward_stds'].append(it_results['reward_std'])
 
         for key in results.keys():
             results[key] = np.array(results[key])

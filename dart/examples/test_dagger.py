@@ -17,10 +17,10 @@ import dart.experiments.framework as framework
 def main():
     title = 'test_dagger'
     ap = argparse.ArgumentParser()
-    ap.add_argument('--envname', required=True)                         # OpenAI gym environment
-    ap.add_argument('--t', required=True, type=int)                     # time horizon
-    ap.add_argument('--iters', required=True, type=int, nargs='+')      # iterations to evaluate the learner on
-    ap.add_argument('--beta', required=True, type=float)                # beta term, see Ross et al.
+    ap.add_argument('--envname', default="HalfCheetahBulletEnv-v0")                         # OpenAI gym environment
+    ap.add_argument('--t', default=100, type=int)  # time horizon
+    ap.add_argument('--iters', default=[3], type=int, nargs='+')  # iterations to evaluate the learner on
+    ap.add_argument('--beta', default=0.5, type=float)                # beta term, see Ross et al.
     
     args = vars(ap.parse_args())
     args['arch'] = [64, 64]

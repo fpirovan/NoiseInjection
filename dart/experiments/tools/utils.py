@@ -44,11 +44,14 @@ def trajs2data(trajs):
             y = np.vstack((y, np.array(controls)))
     return X, y
 
-
+PARENT_DIR = "/Users/fedepiro/Projects/DART"
+# PARENT_DIR = "/cluster/scratch/fpirovan/DART"
+import os
 
 
 def generate_dir(title, sub_dir, input_params):
     d = 'results/' + sub_dir + '/' + input_params['envname'] + '.pkl/' + title + '/'
+    d = os.path.join(PARENT_DIR, d)
     keys = sorted(input_params.keys())
     for key in keys:
         param = stringify(input_params[key])

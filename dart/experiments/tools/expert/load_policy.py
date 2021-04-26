@@ -5,8 +5,29 @@ from .tf_util import lrelu, function
 import pickle
 import tensorflow as tf
 import numpy as np
+from os.path import join as pjoin
+import os
+import yaml
+from stable_baselines3 import A2C, DDPG, DQN, HER, PPO, SAC, TD3
 
-def load_policy(filename):
+ALGOS = {
+    "a2c": A2C,
+    "ddpg": DDPG,
+    "dqn": DQN,
+    "ppo": PPO,
+    "her": HER,
+    "sac": SAC,
+    "td3": TD3
+}
+
+def load_policy(expert_dir, env_id, env, filename):
+    with open(pjoin(expert_dir, env_id, "args.yml")) as f:
+        algo = yaml.load(f, Loader=yaml.UnsafeLoader)["algo"]
+    expert = ALGOS[algo].load(filename, env=env)
+    expert_predict = lambda obs, state: expert.predict(obs, state=state, deterministic=True)
+    return expert_predict
+
+def load_policy_berkeley(filename):
     with open(filename, 'rb') as f:
         data = pickle.loads(f.read())
 

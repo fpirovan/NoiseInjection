@@ -37,9 +37,8 @@ requirements = [
     'numba',
     'sklearn',
     'keras==2.0.4',
-    'mujoco-py==1.50.1.41',
-    'tensorflow==1.5.0',
-    'gym==0.10.3'
+    'mujoco-py==2.0.2.13',
+    'gym==0.17.2'
 ]
 
 setup(
