@@ -9,6 +9,7 @@ from os.path import join as pjoin
 import os
 import yaml
 from stable_baselines3 import A2C, DDPG, DQN, HER, PPO, SAC, TD3
+from dart.experiments.serialization import load
 
 ALGOS = {
     "a2c": A2C,
@@ -23,7 +24,7 @@ ALGOS = {
 def load_policy(expert_dir, env_id, env, filename):
     with open(pjoin(expert_dir, env_id, "args.yml")) as f:
         algo = yaml.load(f, Loader=yaml.UnsafeLoader)["algo"]
-    expert = ALGOS[algo].load(filename, env=env, device="cpu")
+    expert = load(ALGOS[algo], filename, env=env, device="cpu")
     expert_predict = lambda obs, state: expert.predict(obs, state=state, deterministic=True)
     return expert_predict
 
